@@ -1,7 +1,4 @@
 name: Android CI
-env:
-  # The name of the main module repository
-  main_project_module: app
 on:
    push:
     branches: [ "main" ]
@@ -22,22 +19,22 @@ jobs:
         distribution: 'temurin'
 
     - name: Change wrapper permissions
-        run: chmod +x ./gradlew
+      run: chmod +x gradlew
 
       # Run Tests Build
     - name: Run gradle tests
-        run: ./gradlew test
+      run: ./gradlew test
 
       # Run Build Project
     - name: Build gradle project
-        run: ./gradlew build
+      run: ./gradlew build
 
       # Create APK Debug
-    - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleDebug
+    - name: Build apk debug project (APK) - app module
+      run: ./gradlew assembleDebug
 
       # Create APK Release
-    - name: Build apk release project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assemble
-  	- name: Build app bundle release (AAB) - ${{ env.main_project_module }} module
-        run: ./gradlew ${{ env.main_project_module }}:bundleRelease
+    - name: Build apk release project (APK) - app  module
+      run: ./gradlew assemble
+    - name: Build app bundle release (AAB) - app module    
+      run: ./gradlew app:bundleRelease
