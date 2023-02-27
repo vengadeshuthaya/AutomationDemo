@@ -1,0 +1,22 @@
+name: Build Release Android APK
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  Build-Release-Android-APK:
+    runs-on: "ubuntu-latest"
+    if: "contains(github.event.head_commit.message, 'android')"
+    
+    steps:
+    
+      - name: "Checkout Code"
+        uses: actions/checkout@v3
+
+      - name: "Build and Release"
+        run: |
+          chmod a+x gradlew
+          ./gradlew build
+          ./gradlew assembleRelease
+          ./gradlew app:bundleRelease
+        
